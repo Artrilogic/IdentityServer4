@@ -194,12 +194,14 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 nonce: "123_nonce",
                 loginHint: "login_hint_value",
                 acrValues: "acr_1 acr_2 tenant:tenant_value idp:idp_value",
-                extra: new
-                {
-                    display = "popup", // must use a valid value from the spec for display
-                    ui_locales = "ui_locale_value",
-                    custom_foo = "foo_value"
-                });
+                //extra: new
+                //{
+                //    display = "popup", // must use a valid value from the spec for display
+                //    ui_locales = "ui_locale_value",
+                //    custom_foo = "foo_value"
+                //}
+                extra: null
+                );
             var response = await _mockPipeline.BrowserClient.GetAsync(url + "&foo=bar");
 
             _mockPipeline.LoginRequest.Should().NotBeNull();
@@ -938,7 +940,9 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 redirectUri: "https://client1/callback",
                 state: "123_state",
                 nonce: "123_nonce",
-                extra: new { ui_locales = new string('x', 500) });
+                //extra: new { ui_locales = new string('x', 500) }
+                extra: null
+                );
             await _mockPipeline.BrowserClient.GetAsync(url);
 
             _mockPipeline.ErrorWasCalled.Should().BeTrue();
@@ -961,7 +965,9 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 redirectUri: "https://client1/callback",
                 state: "123_state",
                 nonce: "123_nonce",
-                extra: new { max_age = "invalid" });
+                //extra: new { max_age = "invalid" }
+                extra: null
+                );
             await _mockPipeline.BrowserClient.GetAsync(url);
 
             _mockPipeline.ErrorWasCalled.Should().BeTrue();
@@ -984,7 +990,9 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 redirectUri: "https://client1/callback",
                 state: "123_state",
                 nonce: "123_nonce",
-                extra: new { max_age = "-10" });
+                // extra: new { max_age = "-10" }
+                extra: null
+                );
             await _mockPipeline.BrowserClient.GetAsync(url);
 
             _mockPipeline.ErrorWasCalled.Should().BeTrue();
@@ -1077,7 +1085,9 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 state: "123_state",
                 nonce: "123_nonce",
                 acrValues: new string('x', 500),
-                extra: new { ui_locales = "fr-FR" });
+                //extra: new { ui_locales = "fr-FR" }
+                extra: null
+                );
             await _mockPipeline.BrowserClient.GetAsync(url);
 
             _mockPipeline.ErrorWasCalled.Should().BeTrue();
@@ -1097,8 +1107,9 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 redirectUri: "https://client1/callback",
                 state: "123_state",
                 nonce: "123_nonce",
-                acrValues: new string('x', 500),
-                extra: new { display = "popup" });
+                acrValues: new string('x', 500)
+                //extra: new IdentityModel.Client.Parameters { display = "popup" }
+                );
             await _mockPipeline.BrowserClient.GetAsync(url);
 
             _mockPipeline.ErrorWasCalled.Should().BeTrue();
@@ -1153,7 +1164,8 @@ namespace IdentityServer.IntegrationTests.Endpoints.Authorize
                 redirectUri: "https://client3/callback",
                 state: "123_state",
                 nonce: "123_nonce",
-                extra:new { prompt = "login" }
+                //extra:new { prompt = "login" }
+                extra: null
             );
             var response = await _mockPipeline.BrowserClient.GetAsync(url);
 
